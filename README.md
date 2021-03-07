@@ -33,12 +33,12 @@ It has been tested on Linux PC with NVidia GeForce GTX-1080 GPU and Jetson Nano 
 
 - Once everything is ready, clone the repository to any folder and run for example:
   
-  python meteorDL-nano.py --camera 10 --station CZ0001 --fps 25
+  `python meteorDL-nano.py --camera 10 --station CZ0001 --fps 25`
   
   where:
     - camera = last digit of the IP address. The IP segment of the address can be edited directly in the script
     - station = RMS station designation. If none given, the default XX0XXXX is used
-    - fps = framer per second camera settings, currently 10-25 supported
+    - fps = frames per second, currently 10-25 supported
   
   The startup procedure takes several minutes (on Jetson Nano) until the live screen is shown and detection started
 
@@ -48,7 +48,7 @@ detection live view is provided, including basic run time parameters on the comm
 
 **Detection model**
 
-detection model is based on SSD MobileNet V2 FPNLite 640x640 pretrained model, retrained on custom meteor data in VOC format.
+detection model is based on SSD MobileNet V2 FPNLite 640x640 pretrained model, retrained on low amount (hundreds of images) custom meteor data in VOC format.
 The procedure for data preparation and training is described on:
 
 https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/using_your_own_dataset.md
