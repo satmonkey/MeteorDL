@@ -58,7 +58,7 @@ https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc
 **Mask file**
 
 to avoid false detections on camera installation with lower elevation in urban areas, the mask file has to be provided.
-The expected file name is mask-<station-name>.bmp
+The expected file name is 'mask-<station-name>.bmp'
   
 **Multi-camera detection**
 
