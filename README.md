@@ -31,7 +31,7 @@ It has been tested on Linux PC with NVidia GeForce GTX-1080 GPU and Jetson Nano 
 
 - Once everything is ready, clone the repository to any folder and run for example:
   
-  python meteorDL.py --camera 10 --station CZ0001 --fps 25
+  python meteorDL-nano.py --camera 10 --station CZ0001 --fps 25
   
   where:
     - camera = last digit of the IP address. The IP segment of the address can be edited directly in the script
