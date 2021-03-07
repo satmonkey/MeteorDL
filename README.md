@@ -1,6 +1,6 @@
 # MeteorDL - Meteor Deep Learning detector
 
-MeteorDL has been written as a primary real-time object detection tool for RMS, software used in Global Meteor Network:
+MeteorDL has been written primarily as a real-time object detection tool for RMS, software used in Global Meteor Network:
 
 https://github.com/CroatianMeteorNetwork/RMS
 
