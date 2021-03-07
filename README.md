@@ -2,7 +2,6 @@
 
 MeteorDL has been written as a primary object detection tool for RMS:
 https://github.com/CroatianMeteorNetwork/RMS.
-
 However, it can be used as standalone tool.
 
 Requirements:
