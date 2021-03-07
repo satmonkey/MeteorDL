@@ -67,3 +67,12 @@ The expected file name is: `mask-<station-name>.bmp`
 MeteorDL has been tested on linux PC (16-core 2.5GHz CPU, 32 GB RAM) with two full-HD cameras simultaneously without any issues.
 On Jetson Nano, the resolution tested was 1280x720.
 
+**Run time interaction**
+
+following keys are active for interaction during the run time:
+
+- ESC - exit
+- 'Q' - increases detector threshold by 0.1
+- 'A' - decreases detector threshold by 0.1
+
+
