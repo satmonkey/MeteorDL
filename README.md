@@ -1,7 +1,7 @@
 # MeteorDL - Meteor Deep Learning detector
 
 MeteorDL has been written as a primary object detection toold for RMS:
-https://github.com/CroatianMeteorNetwork/RMS
+https://github.com/CroatianMeteorNetwork/RMS.
 But it can be used as standalone tool.
 
 Requirements:
