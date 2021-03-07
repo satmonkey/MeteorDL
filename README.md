@@ -8,7 +8,7 @@ https://globalmeteornetwork.org/
 
 However, it can be used as standalone tool.
 It captures the IP camera stream and detects meteors (or other phenomena seen on dark sky) in real time, featuring 5 second ring-buffer, including 2 second pre-event data.
-The detection is performed on 1s maxpixel image in the middle of the ring buffer.
+The detection is performed on 1 second maxpixel image in the middle of the ring buffer.
 
 **Requirements:**
 
