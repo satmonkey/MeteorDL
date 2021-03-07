@@ -22,7 +22,8 @@ It has been tested on linux PC with NVidia GTX-1080 GPU and Jetson Nano 4GB.
   - dvg_ringbuffer
   - Pillow (PIL)
 
-- Once everything is ready, clone the repository to any folder and run for example
+- Once everything is ready, clone the repository to any folder and run for example:
+  
   python meteordl.py --camera 10 --station CZ0001 --fps 25
   
   where:
