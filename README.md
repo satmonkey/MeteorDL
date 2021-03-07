@@ -17,6 +17,7 @@ In case of positive detection, 5 second long video chunk is created and saved in
 - NVidia CUDA capable GPU
 - min. 4GB RAM
 - python > 3.5
+- IP camera with 720p or 1080p resolution
 
 It has been tested on Linux PC with NVidia GeForce GTX-1080 GPU and Jetson Nano 4GB.
 
