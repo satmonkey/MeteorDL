@@ -222,7 +222,7 @@ if __name__ == "__main__":
 	# IP segment of cameras
 	ip = '192.168.150.'
 	# camera connection string
-	source = 'rtsp://' + ip + args.camera + ':554/user=admin&password=uiouio&channel=1&stream=0'
+	source = 'rtsp://' + ip + args.camera + ':554/user=admin&password=&channel=1&stream=0'
 	station = args.station
 
 	id_list = None
