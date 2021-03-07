@@ -1,7 +1,9 @@
 # MeteorDL - Meteor Deep Learning detector
 
 MeteorDL has been written as a primary real-time object detection tool for RMS:
-https://github.com/CroatianMeteorNetwork/RMS.
+
+https://github.com/CroatianMeteorNetwork/RMS
+
 However, it can be used as standalone tool.
 It captures the IP camera stream and detects meteors (or other phenomena seen on dark sky) in real time, featuring 5 second ring-buffer, including 2 second pre-event data.
 The detection is performed on 1s maxpixel image in the middle of the ring buffer.
