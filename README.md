@@ -24,7 +24,6 @@ It has been tested on Linux PC with NVidia GeForce GTX-1080 GPU and Jetson Nano 
 **Installation**
 - Install the Tensorflow 2 Object detection API v2:
   https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/tf2.md
-
   https://gilberttanner.com/blog/object-detection-with-tensorflow-2
 
 - Install following additional python modules:
