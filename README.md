@@ -1,4 +1,4 @@
-![output](https://user-images.githubusercontent.com/5328519/110521765-73f79f80-8110-11eb-9049-70f60e6a5310.jpg)
+![output](https://user-images.githubusercontent.com/5328519/110521871-97224f00-8110-11eb-94be-b13ebe622a85.jpg)
 # MeteorDL - Meteor Deep Learning detector
 
 MeteorDL has been written primarily as a real-time object detection tool for RMS, software used in Global Meteor Network:
