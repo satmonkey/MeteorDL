@@ -12,7 +12,7 @@ It captures the IP camera stream and detects meteors (or other phenomena seen in
 The detection is performed on 1 second maxpixel image.
 In case of positive detection, 5 second long video chunk is created and saved in the output directory as MP4 video.
 
-**Requirements:**
+## Requirements:
 
 - Linux OS
 - NVidia CUDA capable GPU
@@ -22,7 +22,7 @@ In case of positive detection, 5 second long video chunk is created and saved in
 
 It has been tested on Linux PC with NVidia GeForce GTX-1080 GPU and Jetson Nano 4GB.
 
-**Installation**
+## Installation
 - Install the Tensorflow 2 Object detection API v2:
   
   https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/tf2.md
@@ -48,11 +48,11 @@ It has been tested on Linux PC with NVidia GeForce GTX-1080 GPU and Jetson Nano 
   
   The startup procedure takes several minutes (on Jetson Nano) until the live screen is shown and detection started
 
-**Live view**
+## Live view
 
 detection live view is provided, including basic run time parameters on the command line. 
 
-**Detection model**
+## Detection model
 
 model used is the object detection model based on SSD MobileNet V2 FPNLite 640x640 pretrained model, retrained on low amount (hundreds of RMS images) custom meteor data in VOC format.
 The procedure for data preparation and training is described on:
@@ -63,17 +63,17 @@ and
 
 https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/tf2_training_and_evaluation.md
 
-**Mask file**
+## Mask file
 
 to avoid false detections on camera installation with lower elevation in urban areas, the mask file has to be provided.
 The expected file name is: `mask-<station-name>.bmp`
   
-**Multi-camera detection**
+## Multi-camera detection
 
 MeteorDL has been tested on linux PC (16-core 2.5GHz CPU, 32 GB RAM) with two full-HD cameras simultaneously without any issues.
 On Jetson Nano, the resolution tested was 1280x720.
 
-**Run time interaction**
+## Run time interaction
 
 following keys are active for interaction during the run time:
 
