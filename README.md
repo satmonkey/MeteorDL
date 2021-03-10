@@ -55,7 +55,7 @@ detection live view is provided, including basic run time parameters on the comm
 ## Detection model
 
 model used is the object detection model based on SSD MobileNet V2 FPNLite 640x640 pretrained model, retrained on low amount (hundreds of RMS images) custom meteor data in VOC format.
-The procedure for data preparation and training is described on:
+The general procedure for data preparation and training is described on:
 
 https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/using_your_own_dataset.md
 
