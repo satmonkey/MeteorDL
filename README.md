@@ -29,7 +29,7 @@ It has been tested on Linux PC with NVidia GeForce GTX-1080 GPU and Jetson Nano 
   
   or
   
-https://towardsdatascience.com/creating-your-own-object-detector-ad69dda69c85
+  https://towardsdatascience.com/creating-your-own-object-detector-ad69dda69c85
 
 - Install following additional python modules:
   - numpy
