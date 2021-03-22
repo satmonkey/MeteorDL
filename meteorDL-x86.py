@@ -23,7 +23,7 @@ import configparser
 
 
 class VideoStreamWidget(object):
-	def	__init__(self, src=0):
+	def __init__(self, src=0):
 			# Create a VideoCapture object
 			self.capture = cv2.VideoCapture(src)
 			# Start the thread to read frames from the video stream
@@ -41,7 +41,7 @@ class VideoStreamWidget(object):
 				self.j += 1
 				self.k += 1
 
-	def	update_rb_gpu(self):
+	def update_rb_gpu(self):
 			# Read the next frame from the stream in a different thread
 			# and maintains buffer - list of consequtive frames
 			self.total = fps * b_size		# buffer size
@@ -111,7 +111,7 @@ class VideoStreamWidget(object):
 		self.capture = cv2.VideoCapture(source)
 
 
-	def	saveArray(self, ar):
+	def saveArray(self, ar):
 		# saves array ar, t = tupple(k, time)
 		# time = first frame time
 		ar = cp.asnumpy(ar)
@@ -124,7 +124,7 @@ class VideoStreamWidget(object):
 			a += 1
 
 
-	def	DetectFromStream(self, detector, save_output=False, output_dir='output/'):
+	def DetectFromStream(self, detector, save_output=False, output_dir='output/'):
 
 		self.mp = fps			# maxpixel size in frames
 		self.mp1 = sec_pre * fps			
