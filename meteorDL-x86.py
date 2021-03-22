@@ -27,7 +27,7 @@ class VideoStreamWidget(object):
 			# Create a VideoCapture object
 			self.capture = cv2.VideoCapture(src)
 			# Start the thread to read frames from the video stream
-			self.thread	= Thread(target=self.update_rb_gpu, args=())
+			self.thread = Thread(target=self.update_rb_gpu, args=())
 			self.thread.daemon = True
 			self.thread.start()
 
@@ -47,7 +47,7 @@ class VideoStreamWidget(object):
 			self.total = fps * b_size		# buffer size
 			self.k = 0									# global frame counter
 			self.j = 0									# maxpixel counter
-			self.t = []									# frame/time tracking
+			self.t = []								# frame/time tracking
 			self.time0 = time.time()
 			mutex = Lock()
 			self.station = args.station
@@ -129,8 +129,8 @@ class VideoStreamWidget(object):
 		self.mp = fps			# maxpixel size in frames
 		self.mp1 = sec_pre * fps			
 		self.mp2 = self.mp1 + self.mp	# maxpixel position within the buffer
-		time1	=	0
-		time2	=	1
+		time1 = 0
+		time2 = 1
 		t0 = t1 = t2 = t3 = t4 = 0
 		self.last_frame = 0
 		self.last_frame_recorded = 0
@@ -160,7 +160,7 @@ class VideoStreamWidget(object):
 				self.j = 0
 				print ("detecting at fps={:2.1f}".format(self.mp/(time.time()-time1)) + ' | t=' + str(int(self.t[-1][0])) + ' | ' + str(self.frame_width) + 'x' + str(self.frame_height) + ' | buffer=' + str(self.cp_buffer.shape) + ' | maxpixel=' + str(self.mp) + ' | threshold=' + str(round(detector.Threshold * 10)/10) + ' | t1=' + "{:1.3f}".format(t1-t0) + ' | t2=' + "{:1.3f}".format(t2-t1) + ' | t3=' + "{:1.3f}".format(t3-t2)+ ' | t4=' + "{:1.3f}".format(t4-t3) + ' | perc30=' + "{:.0f}".format(perc30) + '  ', end='\r', flush=True)
 
-				time1 =	t0 = time.time()
+				time1 = t0 = time.time()
 				# timestamp for file name, 1st frame of maxpixel image
 				t_frame1 = self.t[self.mp1][1]
 					
@@ -187,7 +187,7 @@ class VideoStreamWidget(object):
 					#img[maskImage < 3] = np.mean(img[maskImage > 0]) - 20
 				t3 = time.time()
 				self.det_boxes = detector.DetectFromImage(img)
-				img	= detector.DisplayDetections(img, self.det_boxes)
+				img = detector.DisplayDetections(img, self.det_boxes)
 
 				#img = np.array(img, dtype='uint8')
 				#cv2.rectangle(img, (0, (self.frame_height-10)), (114, self.frame_height), (0,0,0), -1)
@@ -243,7 +243,7 @@ class VideoStreamWidget(object):
 					detector.Threshold += 0.1
 				elif key == 97:
 					detector.Threshold -= 0.1
-				#img	= np.zeros((self.frame.shape[0], self.frame.shape[1], self.frame.shape[2]), 'uint8')
+				#img = np.zeros((self.frame.shape[0], self.frame.shape[1], self.frame.shape[2]), 'uint8')
 				time2 = time.time()
 
 		self.capture.release()
