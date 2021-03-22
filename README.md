@@ -48,6 +48,10 @@ It has been tested on Linux PC with NVidia GeForce GTX-1080 GPU and Jetson Nano 
   
   The startup procedure takes several minutes (on Jetson Nano) until the live screen is shown and detection started
 
+- x86 version - edit config.ini to suit your configuration, and run e.g.:
+
+  `python meteorDL-x86.py --station CZ0001`
+
 ## Live view
 
 detection live view is provided, including basic run time parameters on the command line. 
