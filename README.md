@@ -36,6 +36,7 @@ It has been tested on Linux PC with NVidia GeForce GTX-1080 GPU and Jetson Nano 
   - matplotlib
   - dvg_ringbuffer
   - Pillow (PIL)
+  - cupy (x86 version]
 
 - Once everything is ready, clone the repository to any folder and run for example:
   
