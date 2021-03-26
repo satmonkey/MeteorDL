@@ -8,9 +8,10 @@ https://github.com/CroatianMeteorNetwork/RMS
 https://globalmeteornetwork.org/
 
 However, it can be used as standalone tool.
-It captures the IP camera stream and detects meteors (or other phenomena seen in the dark sky) in real time, featuring pre-configured multiple second ring-buffer, pre- and post-event data.
+
+MeteorDL captures the IP camera stream and detects meteors (or other phenomena seen in the dark sky) in real time, featuring ring-buffer, and preconfigured pre- and post-event data period.
 The detection is performed on 1 second maxpixel image.
-In case of positive detection, 5 second long video chunk is created and saved in the output directory as MP4 video.
+In case of positive detection, corresponding several second video chunk is created and saved in the output directory as MP4 video.
 The PC version is using GPU-based ring buffer, while Jetson Nano dvg-ringbuffer (CPU based, cynthonized).  
 
 ## Requirements:
