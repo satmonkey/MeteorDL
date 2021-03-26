@@ -42,6 +42,8 @@ It has been tested on Linux PC with NVidia GeForce GTX-1080 GPU and Jetson Nano 
 - Once everything is ready, clone the repository to any folder, edit config.ini to suit your configuration and run for example:
   
   `python meteorDL-nano.py --station CZ0001`
+  or
+  `python meteorDL-x86.py --station CZ0001`
   
   where station = RMS station designation. If none given, the default XX0XXXX is used.
   
