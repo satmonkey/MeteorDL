@@ -8,9 +8,10 @@ https://github.com/CroatianMeteorNetwork/RMS
 https://globalmeteornetwork.org/
 
 However, it can be used as standalone tool.
-It captures the IP camera stream and detects meteors (or other phenomena seen in the dark sky) in real time, featuring 5 second ring-buffer, including 2 second pre-event data.
+It captures the IP camera stream and detects meteors (or other phenomena seen in the dark sky) in real time, featuring pre-configured multiple second ring-buffer, pre- and post-event data.
 The detection is performed on 1 second maxpixel image.
 In case of positive detection, 5 second long video chunk is created and saved in the output directory as MP4 video.
+The PC version is using GPU-based ring buffer, while Jetson Nano dvg-ringbuffer (CPU based, cynthonized).  
 
 ## Requirements:
 
@@ -31,27 +32,20 @@ It has been tested on Linux PC with NVidia GeForce GTX-1080 GPU and Jetson Nano 
   
   https://gilberttanner.com/blog/tensorflow-object-detection-with-tensorflow-2-creating-a-custom-model
 
-- Install following additional python modules:
+- Install following additional python modules via pip install:
   - numpy
   - matplotlib
-  - dvg_ringbuffer
-  - Pillow (PIL)
+  - dvg_ringbuffer (Jetson Nano)
   - cupy (x86 version)
+  - Pillow (PIL)
 
-- Once everything is ready, clone the repository to any folder and run for example:
+- Once everything is ready, clone the repository to any folder, edit config.ini to suit your configuration and run for example:
   
-  `python meteorDL-nano.py --camera 10 --station CZ0001 --fps 25`
+  `python meteorDL-nano.py --station CZ0001`
   
-  where:
-    - camera = last digit of the IP address. The IP segment of the address can be edited directly in the script
-    - station = RMS station designation. If none given, the default XX0XXXX is used
-    - fps = frames per second, currently 10-25 supported
+  where station = RMS station designation. If none given, the default XX0XXXX is used.
   
   The startup procedure takes several minutes (on Jetson Nano) until the live screen is shown and detection started
-
-- x86 version - edit config.ini to suit your configuration, and run e.g.:
-
-  `python meteorDL-x86.py --station CZ0001`
 
 ## Live view
 
