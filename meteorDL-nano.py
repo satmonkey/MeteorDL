@@ -5,19 +5,14 @@ import os
 from os import path
 import cv2
 from matplotlib import pyplot as plt
-#import matplotlib
 import time
 import argparse
 import numpy as	np
-#import cupy as cp
 from datetime import datetime
 from threading import Thread, Semaphore, Lock
 from detector import DetectorTF2
 import dvg_ringbuffer as rb
 from PIL import Image
-#import cumpy
-#import subprocess as sp
-#import cupyx.scipy.ndimage
 import configparser
 
 
@@ -58,11 +53,8 @@ class VideoStreamWidget(object):
 			#self.np_buffer = np.zeros((self.total, self.frame_height, self.frame_width, 3), dtype='uint8')
 			self.buffer_fill()
 
-			# push the buffer to GPU
-			#print('Moving the ring buffer to GPU...')
-			#self.cp_buffer = cp.array(self.np_buffer)
 			# convert tracking buffer to numpy array
-			self.t = np.array(self.t, dtype='uint32')
+			self.t = np.array(self.t, dtype='float32')
 			while True:
 				if self.capture.isOpened():
 					(self.status, self.frame) = self.capture.read()
@@ -112,7 +104,6 @@ class VideoStreamWidget(object):
 	def saveArray(self, ar):
 		# saves array ar, t = tupple(k, time)
 		# time = first frame time
-		ar = cp.asnumpy(ar)
 		a = 0
 		while a < ar.shape[0]:
 			#ar[a] = detector.DisplayDetections(ar[a], self.det_boxes)
@@ -208,18 +199,18 @@ class VideoStreamWidget(object):
 							self.last_frame = self.t[-1][0]
 							print ("\n" + 'Starting recording...', time.strftime("%H:%M:%S", time.gmtime()), output_path, self.det_boxes, 'frame: ' + str(self.last_frame - buffer.shape[0]) + '-' + str(self.last_frame))
 							# save full buffer
-							self.saveArray(buffer)
 							self.last_frame_recorded = self.last_frame
+							self.saveArray(buffer)
 						
 						  # save another <post> seconds of frames
 							for s in range(sec_post):
 								# wait until 1s data available
-								while self.t[-1][0] < (self.last_frame + self.mp):
+								while self.t[-1][0] < (self.last_frame + 3*self.mp):
 									...
-								if self.t[-1][0] == (self.last_frame + self.mp):
-									self.last_frame = self.t[-1][0]
+								if self.t[-1][0] == (self.last_frame + 3*self.mp):
+									self.last_frame = self.last_frame + 3*self.mp
 									# copy 1s to CPU
-									buffer = self.np_buffer[-self.mp:]
+									buffer = self.np_buffer[-3*self.mp:]
 									self.saveArray(buffer)
 									print ('Recording going on...', buffer.shape, 'frame: ' + str(self.last_frame_recorded) + '-' + str(self.last_frame))
 									self.last_frame_recorded = self.last_frame
