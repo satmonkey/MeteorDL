@@ -49,6 +49,7 @@ class VideoStreamWidget(object):
 			self.j = 0									# maxpixel counter
 			self.t = []								# frame/time tracking
 			self.time0 = time.time()
+			self.cp_buffer = None
 			mutex = Lock()
 			self.station = args.station
 			(self.status, self.frame) = self.capture.read()
@@ -57,13 +58,12 @@ class VideoStreamWidget(object):
 			#self.np_buffer = rb.RingBuffer(self.total, dtype=(np.uint8,(self.frame_height, self.frame_width, 3)), allow_overwrite=False)
 			self.np_buffer = np.zeros((self.total, self.frame_height, self.frame_width, 3), dtype='uint8')
 			self.buffer_fill()
-			print(len(self.t))
 
 			# push the buffer to GPU
 			print('Moving the ring buffer to GPU...')
 			self.cp_buffer = cp.array(self.np_buffer)
 			# convert tracking buffer to numpy array
-			self.t = np.array(self.t, dtype='uint32')
+			self.t = np.array(self.t, dtype='float32')
 			while True:
 				if self.capture.isOpened():
 					(self.status, self.frame) = self.capture.read()
@@ -154,7 +154,7 @@ class VideoStreamWidget(object):
 			print ('No mask file found')
 
 		while True:
-			# if buffer is ready
+			# if new 1s chunk in the buffer is ready for detection
 			if (self.j >= self.mp) and (self.cp_buffer.shape[0] >= self.total):
 				# new maxpixel frame to be tested for detection
 				self.j = 0
@@ -270,7 +270,7 @@ if __name__ == "__main__":
 	print(source)
 	sec_post = int(config['general']['post_seconds'])
 	sec_pre = int(config['general']['pre_seconds'])
-	b_size = int(config['general']['buffer_size'])		# buffer size in seconds
+	b_size = int(config['general']['buffer_size'])
 
 	id_list = None
 	if args.class_ids is not None:
@@ -282,7 +282,8 @@ if __name__ == "__main__":
 	# instance of the class DetectorTF2
 	detector = DetectorTF2(args.model_path, args.path_to_labelmap, class_id=id_list, threshold=args.threshold)
 	video_stream_widget = VideoStreamWidget(source)
-	time.sleep (b_size+1)
+	while (video_stream_widget.cp_buffer is None):
+		...
 	video_stream_widget.DetectFromStream(detector, save_output=args.save_output, output_dir=args.output_directory)
 
 	print("Done ...")
