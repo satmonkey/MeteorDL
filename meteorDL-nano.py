@@ -54,7 +54,7 @@ class VideoStreamWidget(object):
 			self.buffer_fill()
 
 			# convert tracking buffer to numpy array
-			self.t = np.array(self.t, dtype='float32')
+			self.t = np.array(self.t, dtype=('int','float'))
 			while True:
 				if self.capture.isOpened():
 					(self.status, self.frame) = self.capture.read()
@@ -130,9 +130,9 @@ class VideoStreamWidget(object):
 		# number of sec to be added for capture
 
 		mask = False
-		self.station = args.station
+		self.station = station
         # apply the mask if there is any
-		maskFile = 'mask-' + args.station + '.bmp'
+		maskFile = 'mask-' + station + '.bmp'
 		if path.exists(maskFile):
 			print ('Loading mask...')
 			maskImage = Image.open(maskFile).convert('L')
@@ -205,10 +205,11 @@ class VideoStreamWidget(object):
 						  # save another <post> seconds of frames
 							for s in range(sec_post):
 								# wait until 1s data available
-								while self.t[-1][0] < (self.last_frame + 3*self.mp):
+								while self.t[-1][0] < (self.last_frame + 2*self.mp):
+									print(self.t[-1][0])
 									...
-								if self.t[-1][0] == (self.last_frame + 3*self.mp):
-									self.last_frame = self.last_frame + 3*self.mp
+								if self.t[-1][0] == (self.last_frame + 2*self.mp):
+									self.last_frame = self.t[-1][0]
 									# copy 1s to CPU
 									buffer = self.np_buffer[-3*self.mp:]
 									self.saveArray(buffer)
@@ -242,14 +243,14 @@ if __name__ == "__main__":
 	parser.add_argument('--threshold', help='Detection Threshold', type=float, default=0.7)
 	parser.add_argument('--output_directory', help='Path to output images and video', default='output/')
 	parser.add_argument('--save_output', help='Flag for save images and video with detections visualized', default=True, action='store_true')  # default is false
-	parser.add_argument('--station', help='mask file name', default='default')
+	parser.add_argument('--station', help='mask file name', default=None)
 	args = parser.parse_args()
 
 	station = args.station
 	config = configparser.ConfigParser()
 	config.read('config.ini')
-	if station not in config:
-		station = 'default'
+	if args.station is None:
+		station = config['default']['station']
 	fps = int(config[station]['fps'])
 	source = 'rtsp://' + config[station]['ip'] + ':' + config[station]['rtsp']
 	print(source)
