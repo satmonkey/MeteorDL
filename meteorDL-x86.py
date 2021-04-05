@@ -163,7 +163,6 @@ class VideoStreamWidget(object):
 				time1 = t0 = time.time()
 				# timestamp for file name, 1st frame of maxpixel image
 				t_frame1 = self.t[self.mp1][1]
-				print(datetime.utcfromtimestamp(t_frame1).strftime("%Y%m%d_%H%M%S_%f"))
 					
 				# take 1s from middle of buffer to create maxpixel for detection
 				buffer_small = self.cp_buffer[self.mp1:self.mp2,:,:,:]
