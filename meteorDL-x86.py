@@ -47,7 +47,7 @@ class VideoStreamWidget(object):
 			self.total = fps * b_size		# buffer size
 			self.k = 0									# global frame counter
 			self.j = 0									# maxpixel counter
-			self.t = []								# frame/time tracking
+			self.t = []								  # frame/time tracking
 			self.time0 = time.time()
 			self.cp_buffer = None
 			mutex = Lock()
@@ -63,7 +63,7 @@ class VideoStreamWidget(object):
 			print('Moving the ring buffer to GPU...')
 			self.cp_buffer = cp.array(self.np_buffer)
 			# convert tracking buffer to numpy array
-			self.t = np.array(self.t, dtype='float32')
+			self.t = np.asarray(self.t, dtype=('int,float'))
 			while True:
 				if self.capture.isOpened():
 					(self.status, self.frame) = self.capture.read()
@@ -137,7 +137,7 @@ class VideoStreamWidget(object):
 		mean = 0
 		# limit for detection trigger
 		perc30 = 0
-		mean_limit = 130
+		mean_limit = 140
 		# number of sec to be added for capture
 
 		mask = False
@@ -163,6 +163,7 @@ class VideoStreamWidget(object):
 				time1 = t0 = time.time()
 				# timestamp for file name, 1st frame of maxpixel image
 				t_frame1 = self.t[self.mp1][1]
+				print(datetime.utcfromtimestamp(t_frame1).strftime("%Y%m%d_%H%M%S_%f"))
 					
 				# take 1s from middle of buffer to create maxpixel for detection
 				buffer_small = self.cp_buffer[self.mp1:self.mp2,:,:,:]
@@ -187,6 +188,7 @@ class VideoStreamWidget(object):
 					#img[maskImage < 3] = np.mean(img[maskImage > 0]) - 20
 				t3 = time.time()
 				self.det_boxes = detector.DetectFromImage(img)
+				img_clean = img
 				img = detector.DisplayDetections(img, self.det_boxes)
 
 				#img = np.array(img, dtype='uint8')
@@ -202,11 +204,13 @@ class VideoStreamWidget(object):
 							subfolder = 'output/' + args.station + '_' + time.strftime("%Y%m%d", time.gmtime())
 							if not os.path.exists(subfolder):
 								os.mkdir(subfolder)
-							output_path = os.path.join(subfolder, args.station +  '_' + datetime.utcfromtimestamp(t_frame1).strftime("%Y%m%d_%H%M%S_%f") + '.mp4')
-							output_path_mp = os.path.join(subfolder, args.station +  '_mp_' + datetime.utcfromtimestamp(t_frame1).strftime("%Y%m%d_%H%M%S_%f") + '.jpg')
+							output_path = os.path.join(subfolder, station +  '_' + datetime.utcfromtimestamp(t_frame1).strftime("%Y%m%d_%H%M%S_%f") + '.mp4')
+							output_path_mp = os.path.join(subfolder, station +  '_mp_' + datetime.utcfromtimestamp(t_frame1).strftime("%Y%m%d_%H%M%S_%f") + '.jpg')
+							output_path_mp_clean = os.path.join(subfolder, station +  '_mp-clean_' + datetime.utcfromtimestamp(t_frame1).strftime("%Y%m%d_%H%M%S_%f") + '.jpg')
 							self.out = cv2.VideoWriter(output_path, cv2.VideoWriter_fourcc(*"mp4v"), 25, (img.shape[1], img.shape[0]))
 							# save the maxpixel as jpg
 							cv2.imwrite(output_path_mp, img)
+							cv2.imwrite(output_path_mp_clean, img_clean)
 							
 							# copy the buffer to CPU
 							buffer = self.cp_buffer.get()
@@ -220,12 +224,12 @@ class VideoStreamWidget(object):
 						  # save another <post> seconds of frames
 							for s in range(sec_post):
 								# wait until 1s data available
-								while self.t[-1][0] < (self.last_frame + self.mp):
+								while self.t[-1][0] < (self.last_frame + 2*self.mp):
 									...
-								if self.t[-1][0] == (self.last_frame + self.mp):
+								if self.t[-1][0] == (self.last_frame + 2*self.mp):
 									self.last_frame = self.t[-1][0]
 									# copy 1s to CPU
-									buffer = self.cp_buffer[-self.mp:].get()
+									buffer = self.cp_buffer[-2*self.mp:].get()
 									self.saveArray(buffer)
 									print ('Recording going on...', buffer.shape, 'frame: ' + str(self.last_frame_recorded) + '-' + str(self.last_frame))
 									self.last_frame_recorded = self.last_frame
