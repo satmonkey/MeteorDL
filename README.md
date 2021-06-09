@@ -43,9 +43,11 @@ It has been tested on Linux PC with NVidia GeForce GTX-1080 GPU, Jetson Nano 4GB
   
   `sudo apt-get install python3-tflite-runtime`
 
-- Install Edge TPU runtime (RPi4 version):
+- Install Edge TPU runtime and Pycoral library (RPi4 version):
 
   `sudo apt-get install libedgetpu1-std`
+  
+  `sudo apt-get install python3-pycoral`
 
 - Install following additional python modules via e.g. pip install:
   - numpy
