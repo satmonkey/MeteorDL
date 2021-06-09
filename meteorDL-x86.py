@@ -20,6 +20,7 @@ from PIL import Image
 import cupy as cp
 import cupyx.scipy.ndimage
 import configparser
+import statistics as st
 
 
 class VideoStreamWidget(object):
@@ -138,6 +139,9 @@ class VideoStreamWidget(object):
 		# limit for detection trigger
 		perc30 = 0
 		mean_limit = 140
+		bg_max = 0.9
+		thr = 0.9
+		bg=[1,1,1,1,1,1,1,1,1]
 		# number of sec to be added for capture
 
 		mask = False
@@ -158,7 +162,8 @@ class VideoStreamWidget(object):
 			if (self.j >= self.mp) and (self.cp_buffer.shape[0] >= self.total):
 				# new maxpixel frame to be tested for detection
 				self.j = 0
-				print ("detecting at fps={:2.1f}".format(self.mp/(time.time()-time1)) + ' | t=' + str(int(self.t[-1][0])) + ' | ' + str(self.frame_width) + 'x' + str(self.frame_height) + ' | buffer=' + str(self.cp_buffer.shape) + ' | maxpixel=' + str(self.mp) + ' | threshold=' + str(round(detector.Threshold * 10)/10) + ' | t1=' + "{:1.3f}".format(t1-t0) + ' | t2=' + "{:1.3f}".format(t2-t1) + ' | t3=' + "{:1.3f}".format(t3-t2)+ ' | t4=' + "{:1.3f}".format(t4-t3) + ' | perc30=' + "{:.0f}".format(perc30) + '  ', end='\r', flush=True)
+				#print ("detecting at fps={:2.1f}".format(self.mp/(time.time()-time1)) + ' | t=' + str(int(self.t[-1][0])) + ' | ' + str(self.frame_width) + 'x' + str(self.frame_height) + ' | buffer=' + str(self.cp_buffer.shape) + ' | maxpixel=' + str(self.mp) + ' | threshold=' + str(round(detector.Threshold * 10)/10) + ' | t1=' + "{:1.3f}".format(t1-t0) + ' | t2=' + "{:1.3f}".format(t2-t1) + ' | t3=' + "{:1.3f}".format(t3-t2)+ ' | t4=' + "{:1.3f}".format(t4-t3) + ' | perc30=' + "{:.0f}".format(perc30) + '  ', end='\r', flush=True)
+				print ("detecting at fps={:2.1f}".format(self.mp/(time.time()-time1)) + ' | t=' + str(int(self.t[-1][0])) + ' | ' + str(self.frame_width) + 'x' + str(self.frame_height) + ' | buffer=' + str(self.cp_buffer.shape) + ' | maxpixel=' + str(self.mp) + ' | threshold=' + str(round((bg_max + margin) * 100)/100) + ' | t1=' + "{:1.3f}".format(t1-t0) + ' | t2=' + "{:1.3f}".format(t2-t1) + ' | t3=' + "{:1.3f}".format(t3-t2)+ ' | t4=' + "{:1.3f}".format(t4-t3) + ' | perc30=' + "{:.0f}".format(perc30) + '  ', end='\r', flush=True)
 
 				time1 = t0 = time.time()
 				# timestamp for file name, 1st frame of maxpixel image
@@ -182,28 +187,28 @@ class VideoStreamWidget(object):
 
 				if mask:
 					# apply trick from RMS
-					#img[maskImage < 3] = np.mean(img[:250,:,:])
 					img[maskImage < 3] = random_mask[maskImage < 3]
-					#img[maskImage < 3] = np.mean(img[maskImage > 0]) - 20
 				t3 = time.time()
 				self.det_boxes = detector.DetectFromImage(img)
+				#self.det_boxes = self.det_boxes[:][5] > 0.1
 				img_clean = img
-				img = detector.DisplayDetections(img, self.det_boxes)
-
-				#img = np.array(img, dtype='uint8')
-				#cv2.rectangle(img, (0, (self.frame_height-10)), (114, self.frame_height), (0,0,0), -1)
-				#cv2.putText(img, datetime.utcfromtimestamp(self.time0 + self.k * 0.04).strftime('%d/%m/%Y %H:%M:%S'), (0,self.frame_height-3), cv2.FONT_HERSHEY_SIMPLEX, 0.3, (255,255,255), 1, cv2.LINE_AA)
+				if self.det_boxes[0][5] > 0.1:
+					img = detector.DisplayDetections(img, self.det_boxes[:1])
 
 				t4 = time.time()
-				if ((self.det_boxes) and (perc30 < mean_limit)):
-					# trash the saved frames from buffer
-					if save_output:
-							
+				img_small = cv2.resize(img, (928, 522), interpolation = cv2.INTER_AREA)
+				cv2.imshow('Meteor detection',	img_small)
+				key = cv2.waitKeyEx(1)
+				# trigger the saving if signal above the mean noise and sky background below the daytime brightness 
+				if (self.det_boxes and perc30 < mean_limit):
+					#print (self.det_boxes)	
+					if self.det_boxes[0][5] > (bg_max + margin):
+						if save_output:
 							# prepare file and folder for saving
 							subfolder = 'output/' + args.station + '_' + time.strftime("%Y%m%d", time.gmtime())
 							if not os.path.exists(subfolder):
 								os.mkdir(subfolder)
-							output_path = os.path.join(subfolder, station +  '_' + datetime.utcfromtimestamp(t_frame1).strftime("%Y%m%d_%H%M%S_%f") + '.mp4')
+							output_path = os.path.join(subfolder, station +  '_' + datetime.utcfromtimestamp(t_frame1).strftime("%Y%m%d_%H%M%S_%f") + '_' + "{:0.0f}".format(100*self.det_boxes[0][5]) + '.mp4')
 							output_path_mp = os.path.join(subfolder, station +  '_mp_' + datetime.utcfromtimestamp(t_frame1).strftime("%Y%m%d_%H%M%S_%f") + '.jpg')
 							output_path_mp_clean = os.path.join(subfolder, station +  '_mp-clean_' + datetime.utcfromtimestamp(t_frame1).strftime("%Y%m%d_%H%M%S_%f") + '.jpg')
 							self.out = cv2.VideoWriter(output_path, cv2.VideoWriter_fourcc(*"mp4v"), 25, (img.shape[1], img.shape[0]))
@@ -215,7 +220,7 @@ class VideoStreamWidget(object):
 							buffer = self.cp_buffer.get()
 							# note the last frame
 							self.last_frame = self.t[-1][0]
-							print ("\n" + 'Starting recording...', time.strftime("%H:%M:%S", time.gmtime()), output_path, self.det_boxes, 'frame: ' + str(self.last_frame - buffer.shape[0]) + '-' + str(self.last_frame))
+							print ("\n" + 'Starting recording...', time.strftime("%H:%M:%S", time.gmtime()), output_path, self.det_boxes[0], 'frame: ' + str(self.last_frame - buffer.shape[0]) + '-' + str(self.last_frame))
 							# save full buffer
 							self.saveArray(buffer)
 							self.last_frame_recorded = self.last_frame
@@ -235,10 +240,17 @@ class VideoStreamWidget(object):
 							print ('Stopping recording...')
 							self.out.release()
 				
+				# update mean and max noise
+				bg = bg[-9:]
+				bg.append(self.det_boxes[0][5])
+				bg_max = max(bg[:9])
+				#detector.Threshold = st.mean(bg)
+				
+				
 				# update the screen
-				img = cv2.resize(img, (928, 522), interpolation = cv2.INTER_AREA)
-				cv2.imshow('Meteor detection',	img)
-				key = cv2.waitKeyEx(1)
+				#img = cv2.resize(img, (928, 522), interpolation = cv2.INTER_AREA)
+				#cv2.imshow('Meteor detection',	img)
+				#key = cv2.waitKeyEx(1)
 				if key == 27:
 					#self.out.release()
 					break
@@ -263,6 +275,8 @@ if __name__ == "__main__":
 	parser.add_argument('--station', help='mask file name', default='default')
 	args = parser.parse_args()
 
+	# threshold margin
+	margin = 0.3	
 	station = args.station
 	config = configparser.ConfigParser()
 	config.read('config.ini')
