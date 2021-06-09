@@ -45,12 +45,6 @@ It has been tested on Linux PC with NVidia GeForce GTX-1080 GPU, Jetson Nano 4GB
 
 - Install Edge TPU runtime (RPi4 version):
 
-  `echo "deb https://packages.cloud.google.com/apt coral-edgetpu-stable main" | sudo tee /etc/apt/sources.list.d/coral-edgetpu.list`
-
-  `curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -`
-
-  `sudo apt-get update`
-  
   `sudo apt-get install libedgetpu1-std`
 
 - Install following additional python modules via e.g. pip install:
