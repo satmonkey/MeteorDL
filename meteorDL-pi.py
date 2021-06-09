@@ -18,7 +18,6 @@ import statistics as st
 import multiprocessing as mp
 import subprocess as sp
 from queue import Queue
-import cumpy as cp
 
 #import numpy as np
 #import time
