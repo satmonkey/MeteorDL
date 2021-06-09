@@ -12,7 +12,7 @@ However, it can be used as standalone tool.
 MeteorDL captures the IP camera stream and detects meteors (or other phenomena seen in the dark sky) in real time, featuring ring-buffer, and preconfigured pre- and post-event data period.
 The detection is performed on 1 second maxpixel image.
 In case of positive detection, corresponding several second video chunk is created and saved in the output directory as MP4 video.
-The PC version is using GPU-based ring buffer, while Jetson Nano dvg-ringbuffer (CPU based, cynthonized).  
+The PC version is using GPU-based ring buffer, while Jetson Nano and Pi4 version is using dvg-ringbuffer (CPU based, cythonized).
 
 ## Requirements:
 
@@ -22,7 +22,7 @@ The PC version is using GPU-based ring buffer, while Jetson Nano dvg-ringbuffer 
 - python > 3.5
 - IP camera with 720p or 1080p resolution
 
-It has been tested on Linux PC with NVidia GeForce GTX-1080 GPU and Jetson Nano 4GB.
+It has been tested on Linux PC with NVidia GeForce GTX-1080 GPU, Jetson Nano 4GB, and RPi4 4GB.
 
 ## Installation
 - Install the Tensorflow 2 Object detection API v2:
@@ -45,6 +45,8 @@ It has been tested on Linux PC with NVidia GeForce GTX-1080 GPU and Jetson Nano 
   `python meteorDL-nano.py --station CZ0001`
   or
   `python meteorDL-x86.py --station CZ0001`
+  or
+  `python meteorDL-pi.py --station CZ0001`
   
   where station = RMS station designation. If none given, the default XX0XXXX is used.
   
