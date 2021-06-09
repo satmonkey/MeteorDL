@@ -17,7 +17,7 @@ The PC version is using GPU-based ring buffer, while Jetson Nano and Pi4 version
 ## Requirements:
 
 - SW: Linux OS
-- HW: PC + NVidia CUDA capable GPU or Jetson nano or RPi4 + Coral TPU USB accelerator
+- HW: PC + NVidia CUDA capable GPU or Jetson nano or RPi4 + Coral Edge TPU USB accelerator
 - min. 4GB RAM
 - python > 3.5
 - IP camera with 720p or 1080p resolution
