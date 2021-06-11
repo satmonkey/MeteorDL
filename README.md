@@ -52,7 +52,7 @@ It has been tested on Linux PC with NVidia GeForce GTX-1080 GPU, Jetson Nano 4GB
 - Install following additional python modules via e.g. pip install:
   - numpy
   - matplotlib
-  - dvg_ringbuffer (Jetson Nano)
+  - dvg_ringbuffer (Jetson Nano and RPi4)
   - cupy (x86 version)
   - Pillow (PIL)
   - Opencv v4, with gstreamer and FFmpeg backend
