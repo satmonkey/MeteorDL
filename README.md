@@ -14,6 +14,7 @@ Any camera suitable for Opencv (FFMpeg or Gstreamer) is fine.
 The detection is performed on 1 second maxpixel image.
 In case of positive detection, corresponding several second video chunk is created and saved in the output directory as MP4 video.
 The PC version is using GPU-based ring buffer, while Jetson Nano and Pi4 version is using dvg-ringbuffer (CPU based, cythonized).
+
 Raspberry PI4 version needs Google Coral TPU USB stick:
 
 https://coral.ai/products/accelerator/
