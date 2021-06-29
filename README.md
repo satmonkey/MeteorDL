@@ -10,6 +10,7 @@ https://globalmeteornetwork.org/
 However, it can be used as standalone tool.
 
 MeteorDL captures the IP camera stream and detects meteors (or other phenomena seen in the dark sky) in real time, featuring ring-buffer, and preconfigured pre- and post-event data period.
+Any camera suitable for Opencv (FFMpeg or Gstreamer) is fine.
 The detection is performed on 1 second maxpixel image.
 In case of positive detection, corresponding several second video chunk is created and saved in the output directory as MP4 video.
 The PC version is using GPU-based ring buffer, while Jetson Nano and Pi4 version is using dvg-ringbuffer (CPU based, cythonized).
@@ -20,7 +21,7 @@ The PC version is using GPU-based ring buffer, while Jetson Nano and Pi4 version
 - HW: PC + NVidia CUDA capable GPU or Jetson nano or RPi4 + Coral Edge TPU USB accelerator
 - min. 4GB RAM
 - python > 3.5
-- IP camera with 720p or 1080p resolution
+- IP, USB or MIPI camera with 720p or 1080p resolution
 
 It has been tested on Linux PC with NVidia GeForce GTX-1080 GPU, Jetson Nano 4GB, and RPi4 4GB + Coral TPU
 
