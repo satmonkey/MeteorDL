@@ -104,7 +104,10 @@ On Jetson Nano, the resolution tested was 1280x720.
 following keys are active for interaction during the run time:
 
 - ESC - exit
-- 'Q' - increases detector threshold by 0.1
-- 'A' - decreases detector threshold by 0.1
+
+## False detections
+
+Dynamic sensitivity threshold filters out possible false detections (fast moving clouds, nearby planes, etc). Therefore, only sudden and quick events should get detected, like meteors and TLE. Still, you may observe some false positive detections, especially in complex sky conditions around full moon phase.  
+
 
 
