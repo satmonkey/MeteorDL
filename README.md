@@ -23,7 +23,7 @@ https://coral.ai/products/accelerator/
 
 - SW: Linux OS
 - HW: 
-  - Option 1: PC + NVidia CUDA capable GPU or 
+  - Option 1: PC + NVidia CUDA capable GPU
   - Option 2: Jetson nano
   - Option 3: RPi4 + Coral Edge TPU USB accelerator
 - min. 4GB RAM
